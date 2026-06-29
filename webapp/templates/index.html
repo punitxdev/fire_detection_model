@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FireGuard AI — Fire & Smoke Detection</title>
+    <meta name="description" content="AI-powered fire and smoke detection system using YOLO deep learning. Upload a video or paste a YouTube link to detect fire and smoke in real-time.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 2C16 2 8 10 8 18C8 22.4183 11.5817 26 16 26C20.4183 26 24 22.4183 24 18C24 10 16 2 16 2Z" fill="url(#fire-gradient)"/>
+                        <path d="M16 12C16 12 12 16 12 20C12 22.2091 13.7909 24 16 24C18.2091 24 20 22.2091 20 20C20 16 16 12 16 12Z" fill="#FCD34D"/>
+                        <defs>
+                            <linearGradient id="fire-gradient" x1="16" y1="2" x2="16" y2="26" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#F97316"/>
+                                <stop offset="1" stop-color="#DC2626"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>FireGuard <span class="accent">AI</span></h1>
+                    <p class="tagline">Intelligent Fire & Smoke Detection</p>
+                </div>
+            </div>
+            <div class="header-badge">
+                <span class="badge">YOLO11s</span>
+                <span class="badge badge-green">mAP50: 78.9%</span>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <div class="container">
+            <section class="card input-card" id="input-section">
+                <div class="card-header">
+                    <h2>Analyze Video</h2>
+                    <p>Upload a video or paste a YouTube link to detect fire & smoke</p>
+                </div>
+                <div class="tabs">
+                    <button class="tab active" data-tab="upload" id="tab-upload">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        Upload Video
+                    </button>
+                    <button class="tab" data-tab="youtube" id="tab-youtube">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"/>
+                            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+                        </svg>
+                        YouTube URL
+                    </button>
+                </div>
+                <div class="tab-panel active" id="panel-upload">
+                    <div class="drop-zone" id="drop-zone">
+                        <div class="drop-zone-content">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="drop-icon">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                            <p class="drop-title">Drag & drop your video here</p>
+                            <p class="drop-subtitle">or click to browse — MP4, AVI, MOV, MKV (max 500MB)</p>
+                            <input type="file" id="file-input" accept=".mp4,.avi,.mov,.mkv,.webm,.flv,.wmv" hidden>
+                        </div>
+                        <div class="file-info" id="file-info" style="display:none;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/></svg>
+                            <span id="file-name"></span>
+                            <button class="btn-clear" id="btn-clear">&times;</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-panel" id="panel-youtube">
+                    <div class="url-input-group">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-icon">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                        </svg>
+                        <input type="url" id="youtube-url" placeholder="https://www.youtube.com/watch?v=..." class="url-input">
+                    </div>
+                </div>
+                <div class="params-section">
+                    <div class="params-header" id="params-toggle">
+                        <h3>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                            </svg>
+                            Detection Parameters
+                        </h3>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="chevron" id="params-chevron">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </div>
+                    <div class="params-body" id="params-body">
+                        <div class="param-row">
+                            <div class="param-group">
+                                <label for="conf-slider">
+                                    Confidence Threshold
+                                    <span class="param-value" id="conf-value">0.30</span>
+                                </label>
+                                <input type="range" id="conf-slider" min="0.05" max="0.95" step="0.05" value="0.30" class="slider">
+                                <div class="slider-labels">
+                                    <span>More detections</span>
+                                    <span>Higher accuracy</span>
+                                </div>
+                            </div>
+                            <div class="param-group">
+                                <label for="iou-slider">
+                                    IoU Threshold (NMS)
+                                    <span class="param-value" id="iou-value">0.50</span>
+                                </label>
+                                <input type="range" id="iou-slider" min="0.05" max="0.95" step="0.05" value="0.50" class="slider">
+                                <div class="slider-labels">
+                                    <span>Less overlap</span>
+                                    <span>More overlap</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary" id="btn-start" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    Start Detection
+                </button>
+            </section>
+            <section class="card progress-card" id="progress-section" style="display:none;">
+                <div class="card-header">
+                    <h2>Processing</h2>
+                    <span class="status-badge" id="status-badge">Queued</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+                </div>
+                <p class="progress-text" id="progress-text">Starting...</p>
+                <div class="stats-grid" id="stats-grid">
+                    <div class="stat-card stat-fire">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-value" id="stat-fire">0</div>
+                        <div class="stat-label">Fire Detections</div>
+                    </div>
+                    <div class="stat-card stat-smoke">
+                        <div class="stat-icon">💨</div>
+                        <div class="stat-value" id="stat-smoke">0</div>
+                        <div class="stat-label">Smoke Detections</div>
+                    </div>
+                    <div class="stat-card stat-frames">
+                        <div class="stat-icon">🎞️</div>
+                        <div class="stat-value" id="stat-frames">0</div>
+                        <div class="stat-label">Frames Processed</div>
+                    </div>
+                </div>
+            </section>
+            <section class="card output-card" id="output-section" style="display:none;">
+                <div class="card-header">
+                    <h2>Detection Result</h2>
+                    <a class="btn-download" id="btn-download" download>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download
+                    </a>
+                </div>
+                <div class="video-container">
+                    <video id="output-video" controls class="output-video">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="result-summary" id="result-summary"></div>
+                <button class="btn-secondary" id="btn-new">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                    Analyze Another Video
+                </button>
+            </section>
+        </div>
+    </main>
+    <footer class="footer">
+        <p>FireGuard AI &middot; Powered by YOLO11s &middot; Smoke & Fire Detection System</p>
+    </footer>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
